@@ -89,6 +89,7 @@ export default {
 .content {
 	border: 1px solid gray;
 	padding: 1em;
+	background: #ffffff;
 }
 .content > textarea {
 	padding: 0;

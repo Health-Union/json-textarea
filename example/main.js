@@ -14,15 +14,21 @@ export const Launcher = {
         let ele = document.querySelectorAll(selector);
         let opt = options || {};
 
+        if (!opt.comments) {
+            opt.comments = {}
+        }
+
         ele.forEach((item) => {
             new Vue({
                 el: item,
                 render: (h) => {
+                    let field = item.getAttribute("name") || "";
+
                     return h(App, {
                         props: {
                             jsonData: JSON.parse(item.innerHTML) || {},
-                            comments: opt.comments || {},
-                            hidden: item.getAttribute("name") || ""
+                            comments: opt.comments[field] || {},
+                            hidden: field
                         }
                     })
                 },
@@ -52,7 +58,7 @@ Launcher.init(".json_editor", {
     updateCommonts: (e) => {
         console.log(e);
     }
-})
+});
 
 
 

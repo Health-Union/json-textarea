@@ -1,25 +1,32 @@
 const webpack = require('webpack');
 const config = require('./webpack.base.config');
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MinifyPlugin = require("babel-minify-webpack-plugin");
 
 config.entry = './example/main.js';
 config.output = {
     path: path.resolve(__dirname, './example/dist/'),
     // publicPath: '',
-    filename: '[name]_[hash].js',
+    filename: 'JSONTextArea.js',
     library: 'JSONTextArea',
     libraryTarget: 'umd',
 };
 
-config.devtool = 'eval';
+// config.devtool = 'source-map';
 
 config.plugins = (config.plugins || []).concat([
-    new HtmlWebpackPlugin({
-        // filename: './example/index.html',
-        template: './example/index.html',
-        inject: true,
+    new webpack.DefinePlugin({
+        'process.env': {
+            NODE_ENV: JSON.stringify('production'),
+        },
     }),
+    new MinifyPlugin({}, {
+        sourceMap: false,
+        compress: {
+            warnings: false,
+        },
+        comments: true,
+    })
 ]);
 
 config.resolve = {
