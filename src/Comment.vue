@@ -1,6 +1,6 @@
 <template>
    <p class="comments-tip">
-       <span v-if="!status.editable">{{comments}} path: {{getCommentPath()}}
+       <span v-if="!status.editable"><strong>{{comments}}</strong>  {{getCommentPath()}}
             <a @click="edit"><i class="icon-pencil"></i></a>
         </span>
         <span v-if="status.editable">
@@ -29,11 +29,20 @@
 .comments-tip > span {
     background: white;
 }
+.comments-tip > span > strong {
+    color:#0b8e6b;
+    font-weight: 400;
+}
 </style>
 <script>
+import { EventBus } from './event-bus';
+
 export default {
     name: 'Comment',
     props: {
+        commentsData: {
+            default: {}
+        },
         item: {},
         path: null
     },
@@ -49,7 +58,7 @@ export default {
         }
     },
     mounted: function() {
-        this.comments = "new";
+        this.comments = this.commentsData[this.getCommentPath()] || "";
     },
     methods: {
         getCommentPath: function() {
@@ -66,6 +75,11 @@ export default {
         save: function() {
             this.status.editable = false;
             this.comments = this.shadow.comments;
+
+            EventBus.$emit("comments.save", {
+                comments: this.comments,
+                key: this.getCommentPath()
+            })
         }
     }
 }

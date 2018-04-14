@@ -9,17 +9,17 @@
                 <i class="del-btn" @click="delItem(parsedData, item, index)">
                     <i class="icon-trash"></i>
                 </i>
-                <comment :item="item" :path="getPath(item.name)"></comment>
+                <comment :item="item" :commentsData="comments" :path="getPath(item.name)"></comment>
                 <i v-if="item.type == 'object'" class="i-type">{{'{' + item.childParams.length + '}'}}</i>
                 <i v-if="item.type == 'array'" class="i-type">{{'[' + item.childParams.length + ']'}}</i>
             </span>
             <span class="json-val">
                 <template v-if="item.type == 'object'">
-                    <json-view :parsedData="item.childParams" :parentPath="getPath(item.name)" v-model="item.childParams" ></json-view>
+                    <json-view :comments="comments" :parsedData="item.childParams" :parentPath="getPath(item.name)" v-model="item.childParams" ></json-view>
                 </template>
 
                 <template v-else-if="item.type == 'array'">
-                    <array-view :parsedData="item.childParams" :parentPath="getPath(item.name)" v-model="item.childParams" ></array-view>
+                    <array-view :comments="comments" :parsedData="item.childParams" :parentPath="getPath(item.name)" v-model="item.childParams" ></array-view>
                 </template>
 
                 <template v-else>
@@ -52,7 +52,9 @@ export default {
     name: 'JsonView',
     props: {
         parsedData: {},
-        comments:{}, 
+        comments:{
+            default: {}
+        }, 
         parentPath:null
     },
     data: function () {

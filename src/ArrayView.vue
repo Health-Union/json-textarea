@@ -21,11 +21,11 @@
 
                     <span class="json-val">         
                         <template v-if="member.type == 'array'">
-                            <array-view :parsedData="parsedData[index].childParams" :parentPath="getPath(index)" v-model="parsedData[index].childParams"></array-view>
+                            <array-view :comments="comments" :parsedData="parsedData[index].childParams" :parentPath="getPath(index)" v-model="parsedData[index].childParams"></array-view>
                         </template>
 
                         <template v-if="member.type == 'object'">
-                            <json-view :parsedData="parsedData[index].childParams" :parentPath="getPath(index)" v-model="parsedData[index].childParams"></json-view>
+                            <json-view :comments="comments" :parsedData="parsedData[index].childParams" :parentPath="getPath(index)" v-model="parsedData[index].childParams"></json-view>
                         </template>
                         
                     </span>        
@@ -35,7 +35,7 @@
                     <i class="icon-trash"></i>
                 </i>
 
-                <comment :item="member" :index="index" :path="getPath(index)"></comment>
+                <comment :item="member" :commentsData="comments" :index="index" :path="getPath(index)"></comment>
             </li>
         </ol>
 
@@ -54,6 +54,9 @@ import Comment from './Comment.vue'
 export default {
     name: 'ArrayView',
     props: {
+        comments: {
+            default: {}
+        },
         parsedData:{},
         parentPath: null
     },

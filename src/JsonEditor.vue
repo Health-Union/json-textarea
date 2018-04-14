@@ -1,12 +1,21 @@
 <template>
-    <json-view :parsedData="parsedData" v-model="parsedData"></json-view>
+    <json-view :comments="comments" :parsedData="parsedData" v-model="parsedData"></json-view>
 </template>
 
 
 <script>
 export default {
     name: 'JsonEditor',
-    props: { 'objData': { required: true } },
+    props: { 
+        'objData': { 
+            required: true 
+        },
+        comments: {
+            default: {
+                default: {}
+            }
+        }
+    },
     data: function() {
         return {
             'parsedData': [],
@@ -16,12 +25,12 @@ export default {
         this.parsedData = this.jsonParse(this.objData)
     },
     watch: {
-        'parsedData': {
+        parsedData: {
             handler(newValue, oldValue) {
                 this.$emit('input', this.makeJson(this.parsedData))
-　　　　　　  },
+　　　　　　 },
 　　　　    deep: true
-　　　　}   
+　　　　}
     },
     methods: {
         'jsonParse': function (jsonStr) {
