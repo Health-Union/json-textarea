@@ -21,11 +21,11 @@
 
                     <span class="json-val">         
                         <template v-if="member.type == 'array'">
-                            <array-view :parsedData="parsedData[index].childParams" v-model="parsedData[index].childParams"></array-view>
+                            <array-view :parsedData="parsedData[index].childParams" :parentPath="getPath(index)" v-model="parsedData[index].childParams"></array-view>
                         </template>
 
                         <template v-if="member.type == 'object'">
-                            <json-view :parsedData="parsedData[index].childParams" v-model="parsedData[index].childParams"></json-view>
+                            <json-view :parsedData="parsedData[index].childParams" :parentPath="getPath(index)" v-model="parsedData[index].childParams"></json-view>
                         </template>
                         
                     </span>        
@@ -34,6 +34,8 @@
                 <i class="del-btn" @click="delItem(parsedData, member, index)">
                     <i class="icon-trash"></i>
                 </i>
+
+                <comment :item="member" :index="index" :path="getPath(index)"></comment>
             </li>
         </ol>
 
@@ -47,10 +49,14 @@
 
 <script>
 import ItemAddForm from './ItemAddForm.vue'
+import Comment from './Comment.vue'
 
 export default {
     name: 'ArrayView',
-    props: ['parsedData'],
+    props: {
+        parsedData:{},
+        parentPath: null
+    },
     data: function() {
         return {
             'flowData': this.parsedData,
@@ -59,7 +65,8 @@ export default {
         }
     },
     components: {
-        'item-add-form': ItemAddForm
+        'item-add-form': ItemAddForm,
+        'comment': Comment
     },
     methods: {
         'delItem': function (parentDom, item, index) {
@@ -98,6 +105,19 @@ export default {
             this.flowData.push(oj)
             this.$emit('input', this.flowData)
             this.cancelNewItem()
+        },
+        getPath: function(key) {
+            let prefix = this.parentPath ? this.parentPath : '';
+
+            if (typeof(key) == 'undefined') {
+                key = "";
+            }
+
+            if (typeof(key) == 'number') {
+                key = "["+key+"]";
+            }
+
+            return prefix + key;
         }
     }
 }

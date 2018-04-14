@@ -9,16 +9,17 @@
                 <i class="del-btn" @click="delItem(parsedData, item, index)">
                     <i class="icon-trash"></i>
                 </i>
+                <comment :item="item" :path="getPath(item.name)"></comment>
                 <i v-if="item.type == 'object'" class="i-type">{{'{' + item.childParams.length + '}'}}</i>
                 <i v-if="item.type == 'array'" class="i-type">{{'[' + item.childParams.length + ']'}}</i>
             </span>
             <span class="json-val">
                 <template v-if="item.type == 'object'">
-                    <json-view :parsedData="item.childParams" v-model="item.childParams" ></json-view>
+                    <json-view :parsedData="item.childParams" :parentPath="getPath(item.name)" v-model="item.childParams" ></json-view>
                 </template>
 
                 <template v-else-if="item.type == 'array'">
-                    <array-view :parsedData="item.childParams" v-model="item.childParams" ></array-view>
+                    <array-view :parsedData="item.childParams" :parentPath="getPath(item.name)" v-model="item.childParams" ></array-view>
                 </template>
 
                 <template v-else>
@@ -31,6 +32,7 @@
                         </select>
                     </span>
                 </template>
+                
             </span>
         </span>
 
@@ -44,10 +46,15 @@
 
 <script>
 import ItemAddForm from './ItemAddForm.vue'
+import Comment from './Comment.vue'
 
 export default {
     name: 'JsonView',
-    props: {'parsedData': {}},
+    props: {
+        parsedData: {},
+        comments:{}, 
+        parentPath:null
+    },
     data: function () {
         return {
             'flowData': [],
@@ -61,7 +68,8 @@ export default {
     },
 
     components: {
-        'item-add-form': ItemAddForm
+        'item-add-form': ItemAddForm,
+        'comment': Comment
     },
     methods: {
         'delItem': function (parentDom, item, index) {
@@ -116,6 +124,16 @@ export default {
             }
             console.debug(item)
             console.debug(e)
+        },
+
+        getPath: function(key) {
+            let prefix = this.parentPath ? this.parentPath + '.' : '';
+
+            if (typeof(key) == 'undefined') {
+                key = "";
+            }
+
+            return prefix + key;
         }
     }
 }

@@ -14,7 +14,7 @@ ol, ul {
 .block{
     position: relative;
     display: block;
-    line-height: 30px;
+    line-height: 1.5;
 }
 
 .block.hide-block {
@@ -58,8 +58,30 @@ ol, ul {
 
 .block_content {
     text-align: left;
-    margin-left: 30px;
     line-height: 1.5 !important;
+    padding-left: 1.5em;
+
+    &:before {
+        content: "{";
+        display: block;
+        text-indent: -1.5em;
+        font-weight: 700;
+    }
+    &:after {
+        content: "}";
+        display: block;
+        text-indent: -1.5em;
+        font-weight: 700;
+    }
+
+    &.array {
+        &:before {
+            content: "[";
+        }
+        &:after {
+            content: "]";
+        }
+    }
 
     .i-type {
         color: #999;
@@ -67,12 +89,10 @@ ol, ul {
 
     .key-input,
     .val-input {
-        width: 140px;
-        border: none;
-        height: 25px;
+        width: 8em;
+        border: 0;
         padding: 0 5px;
         font-weight: bold;
-        font-size: 14px;
         background: rgba(0,0,0,0);
 
         &:focus {
@@ -144,6 +164,12 @@ ol, ul {
             transform: rotate(-90deg);
             // transition: transform .4s ease;
         }
+    }
+}
+
+.pure-form {
+    input[type=text], select {
+        border-radius:0;
     }
 }
 

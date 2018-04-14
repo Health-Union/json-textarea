@@ -1,32 +1,33 @@
 <template>
-	<div class="j-w">
-		<h1 class="t">Vue-Json-Edit</h1>
-		<div class="editor-w clearfix">
-			<div class="w-2">
-				<div class="editor">
-					<JsonEditor :objData="jsonData" v-model="jsonData" ></JsonEditor>
-				</div>
+	<div class="editor-w clearfix">
+		<div class="tab-wrap">
+			<a @click="changeStatus('json')" :class="status.className.json">JSON VIEW</a>
+			<a @click="changeStatus('text')" :class="status.className.text">TEXT VIEW</a>
+		</div>
+		<div class="content" v-if="status.mode == 'json'">
+			<div class="editor">
+				<JsonEditor :objData="jsonData" v-model="jsonData" ></JsonEditor>
 			</div>
-			<div class="w-2">
-				<div class="code-pre">
-					<div slot="content">
-						<pre>
-							<code class="json" id="res_code"></code>
-						</pre>
-					</div>
-				</div>
-			</div>
+		</div>
+		<div class="content" v-if="status.mode == 'text'">
+			<textarea rows="20" v-model="jsonText"></textarea>
 		</div>
 	</div>
 </template>
 
 <script>
-import hljs from 'highlight.js'
 
 export default {
 	name: 'app',
 	data: function() {
 		return {
+			status: {
+				mode: "json",
+				className: {
+					json: "tab active",
+					text: "tab"
+				}
+			},
 			jsonData: {
 				name: 'jinkin',
 				age: 12,
@@ -45,10 +46,15 @@ export default {
 			}
 		}
 	},
-	watch: {
-		'jsonData': function () {
-			let c = this.formatJson(JSON.stringify(this.jsonData))
-			this.drawResCode(c)
+
+	computed: {
+		jsonText: {
+			get: function() {
+				return JSON.stringify(this.jsonData, null, 4);
+			},
+			set: function(value) {
+				this.jsonData = JSON.parse(value);
+			}
 		}
 	},
 
@@ -119,24 +125,62 @@ export default {
 			return draw.join("");
 		},
 
-		//绘制res body
-		drawResCode: function (content) {
-			var target = document.getElementById('res_code');
-			target.textContent = content
-			hljs.highlightBlock(target)
-		},
-	},
-	mounted: function() {
-		let c = this.formatJson(JSON.stringify(this.jsonData))
-		this.drawResCode(c)
+		changeStatus: function(node){
+			this.status.mode = node;
+			this.status.className = {
+				json: "tab",
+				text: "tab"
+			};
+			this.status.className[node] = "tab active";
+		}
 	}
 }
 </script>
 
 <style>
-@import url('../node_modules/highlight.js/styles/github.css');
+.clearfix {
+	*zoom: 1;
+}
 
+.clearfix:before,
+.clearfix:after {
+	content: '';
+	display: table;
+}
 
+.clearfix:after {
+	clear: both;
+}
+.content {
+	border: 1px solid gray;
+	padding: 1em;
+}
+.content > textarea {
+	padding: 0;
+	margin: 0;
+	border: 0;
+	width: 100%;
+}
+.editor {
+	max-width: 50%;
+	padding: 0
+}
+.tab-wrap:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+.tab {
+	border: 1px solid grey;
+	padding: 0.5em 1em;
+	display: inline-block;
+	margin-bottom: -1px;
+	border-bottom: 0;
+	cursor: pointer;
+}
+.tab.active {
+	background: white;
+}
 </style>
 
 
