@@ -1,58 +1,62 @@
-# Vue-Json-Edit
+# JSON textarea
 
-> visual JSON editor built as an vue component. Provides a basic GUI
+visual JSON editor with comments
 
-
-</br>
-
-
-## **[DEMO](http://jinkin1995.github.io/vue-json-edit)**
-
-</br>
-
-
-## Getting Started
-```
-npm install vue-json-edit --save
-```
-
-</br>
-
+fork from [Vue-Json-Edit](https://github.com/jinkin1995/vue-json-edit)
 
 ## Usage
 
-``` javascript
-//import it in your project At your entry point
-
-import vue from 'vue'
-import JsonEditor from 'vue-json-edit'
-  
-Vue.use(JsonEditor)
-  
-```
-</br>
-
-## Example
-Single file component
 ``` html
 
-<template>
-    <JsonEditor :objData="jsonData" v-model="jsonData" ></JsonEditor>
-</template>
+<textarea name="hello" class="json_editor">
+    [1, 2, 3, "Hello"]
+</textarea>
+
+<script src="path/of/json-textarea.js"></script>
+  
+```
+
+OR
+
+``` html
+
+<textarea name="json" class="my-class">
+    [1, 2, 3, "Hello"]
+</textarea>
+
+<script src="path/of/json-textarea.js"></script>
 <script>
-export default {
-    ...
-    data: function() {
-        return {
-            jsonData: {
-                name: 'mike',
-                age: 22,
-                phone: '18552129932',
-                address: ['AAA C1', 'BBB C2']
-            }
+    JSONTextArea.Launcher.init(".my-class", {
+        comments: {}, //comments data
+        /**
+         * comments save callback
+         **/
+        updateComments: function(e) {
+            //do something
         }
-    }
+    })
+</script>
+  
+```
+
+## Options
+
+- comments:
+
+``` json
+{
+    "json path": "comments text"
+    //....
 }
-</script> 
+```
+
+- updateComments:
+
+``` javascript
+updateComments : function (e) {
+    console.log(e.key); //JSON path
+    console.log(e.comments); //comments text
+    console.log(e.target); //textarea element
+}
 
 ```

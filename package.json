@@ -1,33 +1,19 @@
 {
-    "name": "vue-json-edit",
-    "version": "1.1.5",
-    "description": "visual JSON editor built as an vue component",
-    "author": "Jinkin1995 <jinkin1995@gmail.com>",
+    "name": "json-textarea",
+    "version": "1.0.8",
+    "description": "visual JSON editor with Comments",
+    "author": "Jinkin1995 <jinkin1995@gmail.com>, SamZhou <sam@mixmedia.com>",
     "scripts": {
         "dev": "webpack-dev-server --watch --progress --config webpack.example.js --open --hot --host 127.0.0.1",
         "example": "webpack --progress --config webpack.example.js",
-        "build": "webpack --progress --config webpack.config.js",
-        "lint": "eslint --ext .js,.vue src",
-        "release": "npm version patch && npm publish",
-        "dashboard": "webpack-dashboard -- webpack-dev-server --watch --progress --config webpack.example.js --open --hot --host 0.0.0.0",
-        "analyze": "rimraf dist && webpack --json | webpack-bundle-size-analyzer",
-        "build example": "webpack --progress --config webpack.example.build.js"
+        "build": "webpack --progress --config webpack.config.js"
     },
     "keywords": [
         "Vue",
         "json"
     ],
-    "main": "./src/index.js",
-    "module": "./dist/vue-json-edit.js",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/jinkin1995/vue-json-edit.git"
-    },
-    "homepage": "https://github.com/jinkin1995/vue-json-edit",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/jinkin1995/vue-json-edit/issues"
-    },
+    "main": "./example/main.js",
+    "module": "./dist/json-textarea.js",
     "dependencies": {
         "vue": "^2.2.2"
     },

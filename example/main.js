@@ -7,7 +7,7 @@ Vue.use(JsonEditor);
 export const Launcher = {
     /**
      * @param string selector
-     * @param object options {updateCommonts: callback({key:key, comments:comments, target:ele})}
+     * @param object options {updateComments: callback({key:key, comments:comments, target:ele})}
      */
     init: function(selector, options) {
         let ele = document.querySelectorAll(selector);
@@ -38,8 +38,8 @@ export const Launcher = {
                         appRoot.$on("comments.save", (e) => {
                             appRoot.comments[e.key] = e.comments;
 
-                            if (opt.updateCommonts) {
-                                opt.updateCommonts({
+                            if (opt.updateComments) {
+                                opt.updateComments({
                                     key: e.detail.key,
                                     comments: e.detail.comments,
                                     target: item
@@ -58,7 +58,7 @@ export const Launcher = {
 
 
 Launcher.init(".json_editor", {
-    updateCommonts: (e) => {
+    updateComments: (e) => {
         console.log(e);
     }
 });
