@@ -4,6 +4,8 @@ visual JSON editor with comments
 
 fork from [Vue-Json-Edit](https://github.com/jinkin1995/vue-json-edit)
 
+[Online Demo](https://mm-sam.github.io/json-textarea/)
+
 ## Usage
 
 ``` html
