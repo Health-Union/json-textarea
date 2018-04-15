@@ -35,8 +35,6 @@
 }
 </style>
 <script>
-import { EventBus } from './event-bus';
-
 export default {
     name: 'Comment',
     props: {
@@ -76,10 +74,15 @@ export default {
             this.status.editable = false;
             this.comments = this.shadow.comments;
 
-            EventBus.$emit("comments.save", {
-                comments: this.comments,
-                key: this.getCommentPath()
-            })
+            let event = new CustomEvent("commentssave", { 
+                bubbles: true,
+                detail: {
+                    comments: this.comments,
+                    key: this.getCommentPath()
+                }
+            });
+
+            this.$el.dispatchEvent(event);
         }
     }
 }

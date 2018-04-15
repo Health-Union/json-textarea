@@ -25,7 +25,7 @@ config.plugins = (config.plugins || []).concat([
         compress: {
             warnings: false,
         },
-        comments: true,
+        comments: false,
     })
 ]);
 

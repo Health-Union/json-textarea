@@ -55,7 +55,9 @@ export default {
 	},
 
 	methods: {
-
+		handleCommentsSave: function(e) {
+			this.$emit("comments.save", e);
+		},
 		changeStatus: function(node){
 			this.status.mode = node;
 			this.status.className = {
@@ -64,6 +66,14 @@ export default {
 			};
 			this.status.className[node] = "tab active";
 		}
+	},
+
+	mounted: function() {
+		this.$el.addEventListener("commentssave", this.handleCommentsSave);
+	},
+
+	beforeDestroy: function() {
+		this.$el.removeEventListener("commentssave", this.handleCommentsSave);
 	},
 
 	created: function() {

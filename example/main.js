@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import JsonEditor from '../src/index.js'
 import App from './App.vue'
-import { EventBus } from '../src/event-bus.js'
 
 Vue.use(JsonEditor);
 
@@ -33,17 +32,21 @@ export const Launcher = {
                     })
                 },
 
-                created: function() {
-                    EventBus.$on("comments.save", (e) => {
+                mounted: function() {
+                    let appRoot = this.$children[0];
+                    if (appRoot) {
+                        appRoot.$on("comments.save", (e) => {
+                            appRoot.comments[e.key] = e.comments;
 
-                        this.$children[0].comments[e.key] = e.comments;
-
-                        e.target = item;
-
-                        if (opt.updateCommonts) {
-                            opt.updateCommonts(e);
-                        }
-                    })
+                            if (opt.updateCommonts) {
+                                opt.updateCommonts({
+                                    key: e.detail.key,
+                                    comments: e.detail.comments,
+                                    target: item
+                                });
+                            }
+                        });
+                    }
                 }
             });
         })
