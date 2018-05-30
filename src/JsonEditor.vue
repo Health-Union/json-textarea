@@ -37,6 +37,9 @@ export default {
 
             //
             let parseJson = (json) => {
+                if (json == null || json == undefined) {
+                    json = "";
+                }
                 let result = []
                 let keys = Object.keys(json)
                 keys.forEach((k, index) => {
