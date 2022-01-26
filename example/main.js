@@ -21,13 +21,27 @@ export const Launcher = {
             new Vue({
                 el: item,
                 render: (h) => {
-                    let field = item.getAttribute("name") || "";
+                    let name = item.getAttribute("name") || "";
+                    let cols = item.getAttribute("cols") || "40";
+                    let rows = item.getAttribute("rows") || "10";
+                    let data_input_group = item.getAttribute("data_input_group") || "";
+                    let data_has_siblings = item.getAttribute("data_has_siblings") || "";
+                    let maxlength = item.getAttribute("maxlength") || "";
+                    let cls = item.getAttribute("class") || "";
+                    let id = item.getAttribute("id") || "";
 
                     return h(App, {
                         props: {
                             jsonData: JSON.parse(item.innerHTML) || {},
-                            comments: opt.comments[field] || {},
-                            hidden: field
+                            comments: opt.comments[name] || {},
+                            name: name,
+                            cols: cols,
+                            rows: rows,
+                            data_input_group: data_input_group,
+                            data_has_siblings: data_has_siblings,
+                            maxlength: maxlength,
+                            cls: cls,
+                            id: id
                         }
                     })
                 },

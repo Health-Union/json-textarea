@@ -10,7 +10,7 @@
 			</div>
 		</div>
 		<div class="content" v-show="status.mode == 'text'">
-			<textarea rows="20" :name="hidden" v-model="jsonText"></textarea>
+			<textarea :name="name" :cols="cols" :rows="rows" :data_input_group="data_input_group" :data_has_siblings="data_has_siblings" :maxlength="maxlength" :class="cls" :id="id" v-model="jsonText"></textarea>
 		</div>
 	</div>
 </template>
@@ -23,11 +23,32 @@ export default {
 		jsonData: {
 			default: {}
 		},
-		hidden:{
-			default:""
-		},
 		comments: {
 			default: {}
+		},
+		name:{
+			default:""
+		},
+		cols:{
+			default:""
+		},
+		rows:{
+			default:""
+		},
+		data_input_group:{
+			default:""
+		},
+		data_has_siblings:{
+			default:""
+		},
+		maxlength:{
+			default:""
+		},
+		cls:{
+			default:""
+		},
+		id:{
+			default:""
 		}
 	},
 	data: function() {
@@ -108,7 +129,7 @@ export default {
 	width: 100%;
 }
 .editor {
-	max-width: 50%;
+	max-width: 95%;
 	padding: 0
 }
 .tab-wrap:after {

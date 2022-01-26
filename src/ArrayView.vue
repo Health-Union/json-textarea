@@ -35,7 +35,6 @@
                     <i class="icon-trash"></i>
                 </i>
 
-                <comment :item="member" :commentsData="comments" :index="index" :path="getPath(index)"></comment>
             </li>
         </ol>
 

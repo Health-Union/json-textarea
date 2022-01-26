@@ -9,7 +9,6 @@
                 <i class="del-btn" @click="delItem(parsedData, item, index)">
                     <i class="icon-trash"></i>
                 </i>
-                <comment :item="item" :commentsData="comments" :path="getPath(item.name)"></comment>
                 <i v-if="item.type == 'object'" class="i-type">{{'{' + item.childParams.length + '}'}}</i>
                 <i v-if="item.type == 'array'" class="i-type">{{'[' + item.childParams.length + ']'}}</i>
             </span>
